@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class Admin::Test < ActiveSupport::TestCase
+class Tentacles::Test < ActiveSupport::TestCase
   test "truth" do
-    assert_kind_of Module, Admin
+    assert_kind_of Module, Tentacles
   end
 end

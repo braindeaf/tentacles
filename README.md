@@ -1,5 +1,5 @@
-# Admin
-Short description and motivation.
+# Tentacles
+I've used multiple Rails Admin gems / engines and none of them quite work for me. This is a stab at a new one, taking inspiration from the others that works for me.
 
 ## Usage
 How to use my plugin.
@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'admin'
+gem 'tentacles'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install admin
+$ gem install tentacles
 ```
 
 ## Contributing

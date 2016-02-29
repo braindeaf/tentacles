@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :admin do
+# task :tentacles do
 #   # Task goes here
 # end

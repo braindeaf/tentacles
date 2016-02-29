@@ -14,5 +14,5 @@ index.html.haml
       %td= l post.created_at
       %td= l post.updated_at
       %td
-        = link_to 'edit', admin.edit_model_path(post.id, m: post.class.name)
-        = link_to 'destroy', admin.model_path(post.id, m: post.class.name)
+        = link_to 'edit', tentacles.edit_model_path(post.id, m: post.class.name)
+        = link_to 'destroy', tentacles.model_path(post.id, m: post.class.name)

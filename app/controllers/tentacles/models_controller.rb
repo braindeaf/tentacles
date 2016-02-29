@@ -1,4 +1,4 @@
-module Admin
+module Tentacles
   class ModelsController < ApplicationController
     helper :application
     def index
@@ -23,7 +23,7 @@ module Admin
     def update
       @model = klass.find_by(id: params[:id])
       if @model.update_attributes(model_params)
-        redirect_to admin.model_path(@model.id, table_name: params[:table_name])
+        redirect_to tentacles.model_path(@model.id, table_name: params[:table_name])
       else
         render action: :edit
       end

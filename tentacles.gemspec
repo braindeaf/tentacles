@@ -1,17 +1,17 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "admin/version"
+require "tentacles/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "admin"
-  s.version     = Admin::VERSION
+  s.name        = "tentacles"
+  s.version     = Tentacles::VERSION
   s.authors     = ["Rob Lacey"]
   s.email       = ["contact@robl.me"]
-  s.homepage    = "http://robl.me/gems/admin"
-  s.summary     = "Summary of Admin."
-  s.description = "Description of Admin."
+  s.homepage    = "http://robl.me/gems/tentacles"
+  s.summary     = "Rails model admin interface"
+  s.description = "Taking the best parts of all the Rails admin interfaces."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

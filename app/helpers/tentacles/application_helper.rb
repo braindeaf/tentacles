@@ -1,4 +1,4 @@
-module Admin
+module Tentacles
   module ApplicationHelper
     def model_path(model, options = {})
       super(model.id, options.merge(m: model.class.name))

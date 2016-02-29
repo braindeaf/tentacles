@@ -1,4 +1,4 @@
-= form_for(model, url: model.persisted? ? admin.model_path(model.id, m: params[:m]) : admin.models_path(m: params[:m])) do |f|
+= form_for(model, url: model.persisted? ? tentacles.model_path(model.id, m: params[:m]) : tentacles.models_path(m: params[:m])) do |f|
   
   = f.label :title
   = f.text_field :title
