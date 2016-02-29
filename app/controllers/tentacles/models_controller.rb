@@ -13,7 +13,12 @@ module Tentacles
     end
 
     def create
-      @model = klass.create(model_params)
+      @model = klass.new(model_params)
+      if @model.save
+        redirect_to tentacles.model_path(@model.id, m: klass_name)
+      else
+        render action: :new
+      end
     end
 
     def edit
@@ -23,10 +28,13 @@ module Tentacles
     def update
       @model = klass.find_by(id: params[:id])
       if @model.update_attributes(model_params)
-        redirect_to tentacles.model_path(@model.id, table_name: params[:table_name])
+        redirect_to tentacles.model_path(@model.id, m: klass_name)
       else
         render action: :edit
       end
+    end
+
+    def destroy
     end
 
     private
@@ -36,11 +44,15 @@ module Tentacles
     end
 
     def model_params
-      params.require(klass_name.tableize).permit!
+      params.require(klass_singular_name).permit!
     end
 
     def klass_name
       params[:m]
+    end
+
+    def klass_singular_name
+      klass_name.tableize.singularize
     end
   end
 end
