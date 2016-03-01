@@ -1,0 +1,9 @@
+!!! 5
+%html
+  %head
+    %title Tentacles
+    = stylesheet_link_tag    "tentacles/application", media: "all"
+    = javascript_include_tag "tentacles/application"
+    = csrf_meta_tags
+
+  %body= yield

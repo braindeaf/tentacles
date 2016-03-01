@@ -1,11 +1,13 @@
 Tentacles::Engine.routes.draw do
-  get '/' => 'main#index'
-  get    '/m/:m'          => 'tentacles/models#index', as: :models
-  get    '/m/:m/new'      => 'tentacles/models#new', as: :new_model
-  post   '/m/:m'          => 'tentacles/models#create'
-  get    'm/:m/:id'       => 'tentacles/models#show', as: :model
-  get    '/m/:m/:id/edit' => 'tentacles/models#edit', as: :edit_model
-  put    '/m/:m/:id'      => 'tentacles/models#update'
-  patch   '/m/:m/:id'     => 'tentacles/models#update'
-  delete '/m/:m/:id'      => 'tentacles/models#destroy'
+  get '/' => 'tentacles/main#index'
+  scope '/:klass' do
+    get    '/'         => 'tentacles/models#index', as: :models
+    get    '/new'      => 'tentacles/models#new', as: :new_model
+    post   '/'         => 'tentacles/models#create'
+    get    '/:id'      => 'tentacles/models#show', as: :model
+    get    '/:id/edit' => 'tentacles/models#edit', as: :edit_model
+    put    '/:id'      => 'tentacles/models#update'
+    patch  '/:id'      => 'tentacles/models#update'
+    delete '/:id'      => 'tentacles/models#destroy'    
+  end
 end

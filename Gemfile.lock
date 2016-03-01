@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    admin (0.1.0)
+    tentacles (0.0.1)
       rails (>= 5.0.0.beta3, < 5.1)
 
 GEM
@@ -114,8 +114,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  admin!
   sqlite3
+  tentacles!
 
 BUNDLED WITH
    1.11.2

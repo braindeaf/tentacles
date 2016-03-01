@@ -1,6 +1,6 @@
-%table
-
-  - @model.attributes.each do |k, v|
-    %tr
-      %th= k
-      %td= v
+= render 'layout' do
+  %table
+    - @model.attributes.each do |k, v|
+      %tr
+        %th= k
+        %td= v

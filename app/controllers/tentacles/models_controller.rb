@@ -48,7 +48,7 @@ module Tentacles
     end
 
     def klass_name
-      params[:m]
+      params[:klass]
     end
 
     def klass_singular_name
