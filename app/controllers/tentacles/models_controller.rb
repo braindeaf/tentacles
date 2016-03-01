@@ -1,7 +1,10 @@
 module Tentacles
-  class ModelsController < ApplicationController
+  class ModelsController < Tentacles::ApplicationController
+    helper_method :klass
+    
     helper :application
     def index
+      @models = klass.all
     end
     
     def new
@@ -15,7 +18,7 @@ module Tentacles
     def create
       @model = klass.new(model_params)
       if @model.save
-        redirect_to tentacles.model_path(@model.id, m: klass_name)
+        redirect_to tentacles.model_path(@model.id, klass: klass_name)
       else
         render action: :new
       end
@@ -28,7 +31,7 @@ module Tentacles
     def update
       @model = klass.find_by(id: params[:id])
       if @model.update_attributes(model_params)
-        redirect_to tentacles.model_path(@model.id, m: klass_name)
+        redirect_to tentacles.model_path(@model.id, klass: klass_name)
       else
         render action: :edit
       end

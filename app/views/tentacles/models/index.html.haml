@@ -1,16 +1,19 @@
 = render 'layout' do
+
+  = link_to 'New', tentacles.new_model_path(klass: params[:klass])
+
   %table
     %tr
-      %th Id
-      %th Title
+      - klass.column_names[0..1].each do |column|
+        %th= column.humanize
       %th Updated At
       %th Actions
-    - Post.all.each do |post|
+    - @models.each do |model|
       %tr
-        %td= post.id
-        %td= post.title
-        %td= l post.updated_at
+        - klass.column_names[0..1].each do |column|
+          %td= model.send(column)
+        %td= l model.updated_at
         %td
-          = link_to 'show', tentacles.model_path(post.id, klass: post.class.name)
-          = link_to 'edit', tentacles.edit_model_path(post.id, klass: post.class.name)
-          = link_to 'destroy', tentacles.model_path(post.id, klass: post.class.name)
+          = link_to 'show', tentacles.model_path(model.id, klass: model.class.name)
+          = link_to 'edit', tentacles.edit_model_path(model.id, klass: model.class.name)
+          = link_to 'destroy', tentacles.model_path(model.id, klass: model.class.name)

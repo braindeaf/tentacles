@@ -1,5 +1,5 @@
 module Tentacles
-  class MainController < ApplicationController
+  class MainController < Tentacles::ApplicationController
     def index
     end
   end

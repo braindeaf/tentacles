@@ -1,9 +1,7 @@
-= form_for(model, url: model.persisted? ? tentacles.model_path(model.id, m: params[:m]) : tentacles.models_path(m: params[:m])) do |f|
-  
-  = f.label :title
-  = f.text_field :title
+= form_for(model, url: model.persisted? ? tentacles.model_path(model.id, klass: params[:klass]) : tentacles.models_path(klass: params[:klass])) do |f|
 
-  = f.label :body
-  = f.text_area :body
+  - (model.class.column_names - %w(id created_at updated_at)).each do |column|  
+    = f.label column
+    = f.text_field column
 
   = f.submit f.object.persisted? ? t('_save') : t('_update')
