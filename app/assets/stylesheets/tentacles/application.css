@@ -12,9 +12,5 @@
  *
  *= require_tree .
  *= require_self
- *= require foundation_and_overrides
  */
 
- body {
-  background: url(http://blog.soulwire.co.uk/wp-content/uploads/2009/05/tentacles-cropped-710x326.jpg);
- }
