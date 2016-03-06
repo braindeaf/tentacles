@@ -1,10 +1,10 @@
 module Tentacles
   class ModelsController < Tentacles::ApplicationController
     helper_method :klass
-    
     helper :application
+
     def index
-      @models = klass.all
+      @models = klass.all.page(params[:page] || 1).per(params[:per_page] || 10)
     end
     
     def new

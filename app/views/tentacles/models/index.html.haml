@@ -1,6 +1,6 @@
 = render 'layout' do
 
-  = link_to 'New', tentacles.new_model_path(klass: params[:klass])
+  = link_to 'New', tentacles.new_model_path(klass: params[:klass]), class: 'button'
 
   %table
     %tr
@@ -17,3 +17,5 @@
           = link_to 'show', tentacles.model_path(model.id, klass: model.class.name)
           = link_to 'edit', tentacles.edit_model_path(model.id, klass: model.class.name)
           = link_to 'destroy', tentacles.model_path(model.id, klass: model.class.name)
+
+  = paginate @models
