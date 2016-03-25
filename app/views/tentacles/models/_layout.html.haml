@@ -1,4 +1,8 @@
 .row
   .columns.large-3
     %h1 Models
-  .columns.large-9= yield
+    %ul
+    - ActiveRecord::Base.descendants.each do |klass|
+      %li= link_to klass.to_s, tentacles.models_path(klass: klass.to_s)
+  .columns.large-9
+    = yield
