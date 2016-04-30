@@ -7,7 +7,11 @@ module Kaminari
         begin
           Tentacles::Engine.routes.url_helpers.url_for arguments
         rescue
-          @template.main_app.url_for arguments
+          begin
+            @template.url_for arguments
+          rescue
+            @template.main_app.url_for arguments
+          end
         end
       end
 
