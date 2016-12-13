@@ -1,6 +1,13 @@
 = simple_form_for(model, url: model.persisted? ? tentacles.model_path(model.id, klass: params[:klass]) : tentacles.models_path(klass: params[:klass])) do |f|
 
-  - (model.class.column_names - %w(id created_at updated_at)).each do |column|  
-    = f.input column
+  - (model.class.column_names - %w(id created_at updated_at)).each do |column|
+    - case @model.column_for_attribute(column).type
+    - when :datetime, :date
+      = f.input column, as: :datetime, include_blank: true
+    - when :text
+      = f.input column, as: :text, input_html: { rows: 20 }
+    - else
+      = f.input column
+
 
   = f.submit f.object.persisted? ? t('_save') : t('_update'), class: 'button'

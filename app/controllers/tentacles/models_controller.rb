@@ -2,11 +2,13 @@ module Tentacles
   class ModelsController < Tentacles::ApplicationController
 
     before_filter :prepend_klass_path
-    helper_method :klass
+    helper_method :klass, :klass_name
     helper :application
 
     def index
-      @models = klass.all.page(params[:page] || 1).per(params[:per_page] || 10)
+      @models = klass.all
+      @models = @models.where(params.slice(*klass.column_names))
+      @models = @models.page(params[:page] || 1).per(params[:per_page] || 10)
     end
     
     def new
@@ -57,7 +59,7 @@ module Tentacles
     end
 
     def klass_singular_name
-      klass_name.tableize.singularize
+      klass_name.split('::').last.tableize.singularize
     end
 
     def prepend_klass_path

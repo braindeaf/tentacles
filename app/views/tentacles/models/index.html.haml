@@ -1,23 +1,26 @@
-= render layout: 'layout' do
+- #
+- #
+- #
+- columns = (klass.respond_to?(:index_column_names) ? klass.index_column_names : klass.column_names[0..1])
 
-  = link_to 'New', tentacles.new_model_path(klass: params[:klass]), class: 'button'
+= render layout: 'layout' do
 
   %table
     %tr
-      - klass.column_names[0..1].each do |column|
+      - columns.each do |column|
         %th= column.humanize
-      - if klass.column_names.include?('updated_at')
+      - if columns.include?('updated_at')
         %th Updated At
       %th Actions
     - @models.each do |model|
       %tr
-        - klass.column_names[0..1].each do |column|
+        - columns.each do |column|
           %td= model.send(column)
         - if model.respond_to?(:updated_at)
           %td= l model.updated_at
         %td
-          = link_to 'show', tentacles.model_path(model.id, klass: model.class.name)
-          = link_to 'edit', tentacles.edit_model_path(model.id, klass: model.class.name)
-          = link_to 'destroy', tentacles.model_path(model.id, klass: model.class.name)
+          = link_to 'show', tentacles.model_path(model.id, klass: klass_name)
+          = link_to 'edit', tentacles.edit_model_path(model.id, klass: klass_name)
+          = link_to 'destroy', tentacles.model_path(model.id, klass: klass_name)
 
   = paginate @models

@@ -5,4 +5,11 @@
     - ActiveRecord::Base.descendants.each do |klass|
       %li= link_to klass.to_s, tentacles.models_path(klass: klass.to_s)
   .columns.large-9
+
+    %div
+      = link_to_unless_current 'New', tentacles.new_model_path(klass: params[:klass]), class: 'button'
+      - if @model.try(:persisted?)
+        = link_to_unless_current 'Show', tentacles.model_path(@model.id, klass: params[:klass]), class: 'button'
+        = link_to_unless_current 'Edit', tentacles.edit_model_path(@model.id, klass: params[:klass]), class: 'button'
+
     = yield
