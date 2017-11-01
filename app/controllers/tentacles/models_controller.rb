@@ -63,9 +63,11 @@ module Tentacles
     end
 
     def prepend_klass_path
-      # lookup_context.prefixes.prepend klass.table_name
-      path = "app/views/#{klass.table_name}"
-      prepend_view_path([Rails.root.join(path), Tentacles::Engine.root.join(path)])
+      lookup_context.prefixes.prepend("tentacles/models/#{klass.table_name}")
+      prepend_view_path([
+        Rails.root.join("app/views/tentacles/models/#{klass.table_name}"),
+        Tentacles::Engine.root.join("app/views/#{klass.table_name}")
+      ])
     end
 
   end
