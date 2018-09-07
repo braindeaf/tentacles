@@ -1,14 +1,14 @@
 module Tentacles
   class ModelsController < Tentacles::ApplicationController
 
-    before_filter :prepend_klass_path
+    before_action :prepend_klass_path
     helper_method :klass
     helper :application
 
     def index
       @models = klass.all.page(params[:page] || 1).per(params[:per_page] || 10)
     end
-    
+
     def new
       @model = klass.new
     end
