@@ -20,4 +20,4 @@
           = link_to 'edit', tentacles.edit_model_path(model.id, klass: model.class.name)
           = link_to 'destroy', tentacles.model_path(model.id, klass: model.class.name)
 
-  = paginate @models
+  = paginate @models, route_set: tentacles
