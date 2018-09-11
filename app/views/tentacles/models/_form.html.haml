@@ -1,6 +1,3 @@
 = simple_form_for(model, url: model.persisted? ? tentacles.model_path(model.id, klass: params[:klass]) : tentacles.models_path(klass: params[:klass])) do |f|
-
-  - (model.class.column_names - %w(id created_at updated_at)).each do |column|  
-    = f.input column
-
+  = render 'fields', f: f
   = f.submit f.object.persisted? ? t('_save') : t('_update'), class: 'button'

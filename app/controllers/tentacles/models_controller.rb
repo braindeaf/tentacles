@@ -1,7 +1,6 @@
 module Tentacles
   class ModelsController < Tentacles::ApplicationController
-
-    before_action :prepend_klass_path
+    around_action :prepend_view_context_prefix
     helper_method :klass
     helper :application
 
@@ -60,11 +59,11 @@ module Tentacles
       klass_name.tableize.singularize
     end
 
-    def prepend_klass_path
-      # lookup_context.prefixes.prepend klass.table_name
-      path = "app/views/#{klass.table_name}"
-      prepend_view_path([Rails.root.join(path), Tentacles::Engine.root.join(path)])
+    def prepend_view_context_prefix
+      path = "tentacles/#{klass.table_name}"
+      lookup_context.prefixes.unshift(path)
+      yield
+      lookup_context.prefixes.shift
     end
-
   end
 end
