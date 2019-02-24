@@ -12,7 +12,10 @@
 //
 //= require jquery
 //= require_tree .
+//= require_tree ../../../../../../../app/assets/javascripts/tentacles
 
 $(document).ready(function(){
-  $('textarea').autoResize();
+  $('textarea').each(function() {
+    autosize($(this))
+  })
 });
