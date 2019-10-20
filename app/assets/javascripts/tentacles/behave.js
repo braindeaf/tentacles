@@ -13,10 +13,10 @@
 (function(undefined){
 
     'use strict';
-    
+
     var BehaveHooks = BehaveHooks || (function(){
 		var hooks = {};
-		
+
 		return {
 		    add: function(hookName, fn){
 			    if(typeof hookName == "object"){
@@ -41,7 +41,7 @@
 		    	}
 		    }
 	    };
-	    
+
 	})(),
 	Behave = Behave || function (userOpts) {
 
@@ -108,18 +108,18 @@
 
         },
         utils = {
-        	
+
         	_callHook: function(hookName, passData){
     			var hooks = BehaveHooks.get(hookName);
 	    		passData = typeof passData=="boolean" && passData === false ? false : true;
-	    		
+
 	    		if(hooks){
 			    	if(passData){
 				    	var theEditor = defaults.textarea,
 				    		textVal = theEditor.value,
 				    		caretPos = utils.cursor.get(),
 				    		i;
-				    	
+
 				    	for(i=0; i<hooks.length; i++){
 					    	hooks[i].call(undefined, {
 					    		editor: {
@@ -143,11 +143,11 @@
 			    	}
 		    	}
 	    	},
-        	
+
             defineNewLine: function(){
                 var ta = document.createElement('textarea');
                 ta.value = "\n";
-                
+
                 if(ta.value.length==2){
                     newLine = "\r\n";
                 } else {
@@ -155,13 +155,13 @@
                 }
             },
             defineTabSize: function(tabSize){
-                if(typeof defaults.textarea.style.OTabSize != "undefined"){ 
+                if(typeof defaults.textarea.style.OTabSize != "undefined"){
                     defaults.textarea.style.OTabSize = tabSize; return;
                 }
-                if(typeof defaults.textarea.style.MozTabSize != "undefined"){ 
+                if(typeof defaults.textarea.style.MozTabSize != "undefined"){
                     defaults.textarea.style.MozTabSize = tabSize; return;
                 }
-                if(typeof defaults.textarea.style.tabSize != "undefined"){ 
+                if(typeof defaults.textarea.style.tabSize != "undefined"){
                     defaults.textarea.style.tabSize = tabSize; return;
                 }
             },
@@ -203,12 +203,12 @@
                 },
                 selection: function(){
                     var textAreaElement = defaults.textarea,
-                        start = 0, 
-                        end = 0, 
-                        normalizedValue, 
+                        start = 0,
+                        end = 0,
+                        normalizedValue,
                         range,
-                        textInputRange, 
-                        len, 
+                        textInputRange,
+                        len,
                         endRange;
 
                     if (typeof textAreaElement.selectionStart == "number" && typeof textAreaElement.selectionEnd == "number") {
@@ -218,10 +218,10 @@
                         range = document.selection.createRange();
 
                         if (range && range.parentElement() == textAreaElement) {
-                            
+
                             normalizedValue = utils.editor.get();
                             len = normalizedValue.length;
-                            
+
                             textInputRange = textAreaElement.createTextRange();
                             textInputRange.moveToBookmark(range.getBookmark());
 
@@ -326,7 +326,7 @@
                 }
 
                 var finalLevels = levels - toDecrement;
-                
+
                 return finalLevels >=0 ? finalLevels : 0;
             },
             deepExtend: function(destination, source) {
@@ -355,7 +355,7 @@
 	                element.detachEvent("on"+eventName, func);
 	            }
 	        },
-	        
+
             preventDefaultEvent: function(e){
                 if(e.preventDefault){
                     e.preventDefault();
@@ -371,16 +371,16 @@
 
                 if (e.keyCode == 9) {
                     utils.preventDefaultEvent(e);
-                    
+
                     var toReturn = true;
                     utils._callHook('tab:before');
-                    
+
                     var selection = utils.cursor.selection(),
                         pos = utils.cursor.get(),
                         val = utils.editor.get();
 
                     if(selection){
-                        
+
                         var tempStart = selection.start;
                         while(tempStart--){
                             if(val.charAt(tempStart)=="\n"){
@@ -400,7 +400,7 @@
                                 }
                             }
                             toIndent = lines.join("\n");
-                            
+
                             utils.editor.set( val.substring(0,selection.start) + toIndent + val.substring(selection.end) );
                             utils.cursor.set(selection.start, selection.start+toIndent.length);
 
@@ -434,6 +434,60 @@
                 }
                 return toReturn;
             },
+            cmdKey: function (e) {
+
+                if(!utils.fenceRange()){ return; }
+
+                if (e.keyCode == 91) {
+                    console.log
+                    utils.preventDefaultEvent(e);
+
+                    var toReturn = true;
+                    utils._callHook('tab:before');
+
+                    var selection = utils.cursor.selection(),
+                        pos = utils.cursor.get(),
+                        val = utils.editor.get();
+
+                    if(selection){
+
+                        var tempStart = selection.start;
+                        while(tempStart--){
+                            if(val.charAt(tempStart)=="\n"){
+                                selection.start = tempStart + 1;
+                                break;
+                            }
+                        }
+
+                        var toIndent = val.substring(selection.start, selection.end),
+                            lines = toIndent.split("\n"),
+                            i;
+
+                        if(e.keyCode == 219){
+                            for(i = 0; i<lines.length; i++){
+                                if(lines[i].substring(0,tab.length) == tab){
+                                    lines[i] = lines[i].substring(tab.length);
+                                }
+                            }
+                            toIndent = lines.join("\n");
+
+                            utils.editor.set( val.substring(0,selection.start) + toIndent + val.substring(selection.end) );
+                            utils.cursor.set(selection.start, selection.start+toIndent.length);
+
+                        } else if(e.keyCode = 221)  {
+                            for(i in lines){
+                                lines[i] = tab + lines[i];
+                            }
+                            toIndent = lines.join("\n");
+
+                            utils.editor.set( val.substring(0,selection.start) + toIndent + val.substring(selection.end) );
+                            utils.cursor.set(selection.start, selection.start+toIndent.length);
+                        }
+                    }
+                    utils._callHook('tab:after');
+                }
+                return toReturn;
+            },
             enterKey: function (e) {
 
                 if(!utils.fenceRange()){ return; }
@@ -442,7 +496,7 @@
 
                     utils.preventDefaultEvent(e);
                     utils._callHook('enter:before');
-                    
+
                     var pos = utils.cursor.get(),
                         val = utils.editor.get(),
                         left = val.substring(0, pos),
@@ -468,7 +522,7 @@
                                 closingBreak = newLine;
                             }
                         }
-                        
+
                     }
 
                     var edited = left + newLine + ourIndent + closingBreak + (ourIndent.substring(0, ourIndent.length-tab.length) ) + right;
@@ -480,12 +534,12 @@
             deleteKey: function (e) {
 
 	            if(!utils.fenceRange()){ return; }
-	
+
 	            if(e.keyCode == 8){
 	            	utils.preventDefaultEvent(e);
-	                            
+
 	            	utils._callHook('delete:before');
-	            	
+
 	            	var pos = utils.cursor.get(),
 	                    val = utils.editor.get(),
 	                    left = val.substring(0, pos),
@@ -493,7 +547,7 @@
 	                    leftChar = left.charAt(left.length - 1),
 	                    rightChar = right.charAt(0),
 	                    i;
-	            	
+
 	                if( utils.cursor.selection() === false ){
 	                    for(i=0; i<charSettings.keyMap.length; i++) {
 	                        if (charSettings.keyMap[i].open == leftChar && charSettings.keyMap[i].close == rightChar) {
@@ -512,10 +566,10 @@
 	                    utils.editor.set(edited);
 	                    utils.cursor.set(pos);
 	                }
-	                
+
 	                utils._callHook('delete:after');
-	                
-	            }
+
+	           }
 	        }
         },
         charFuncs = {
@@ -552,7 +606,7 @@
                 if(!utils.fenceRange()){ return; }
 
                 var theCode = e.which || e.keyCode;
-                
+
                 if(theCode == 39 || theCode == 40 && e.which===0){ return; }
 
                 var _char = String.fromCharCode(theCode),
@@ -578,7 +632,7 @@
                 if(defaults.autoStrip){ utils.addEvent(defaults.textarea, 'keydown', intercept.deleteKey); }
 
                 utils.addEvent(defaults.textarea, 'keypress', action.filter);
-                
+
                 utils.addEvent(defaults.textarea, 'keydown', function(){ utils._callHook('keydown'); });
                 utils.addEvent(defaults.textarea, 'keyup', function(){ utils._callHook('keyup'); });
             }
@@ -625,8 +679,8 @@
     }
 
     if (typeof define === "function" && define.amd) {
-        define("behave", [], function () { 
-            return Behave; 
+        define("behave", [], function () {
+            return Behave;
         });
     }
 
