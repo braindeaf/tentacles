@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
@@ -20,6 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>= 4.0.0', '< 5.3'
   s.add_dependency 'kaminari'
   s.add_dependency 'kaminari_route_prefix'
-  
+
   s.add_development_dependency 'sqlite3'
 end

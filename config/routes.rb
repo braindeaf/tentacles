@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Tentacles::Engine.routes.draw do
   get '/' => 'tentacles/main#index'
   scope '/:klass' do
@@ -8,6 +9,6 @@ Tentacles::Engine.routes.draw do
     get    '/:id/edit' => 'tentacles/models#edit', as: :edit_model
     put    '/:id'      => 'tentacles/models#update'
     patch  '/:id'      => 'tentacles/models#update'
-    delete '/:id'      => 'tentacles/models#destroy'    
+    delete '/:id'      => 'tentacles/models#destroy'
   end
 end

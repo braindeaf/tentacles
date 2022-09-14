@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Tentacles
   class ModelsController < Tentacles::ApplicationController
     around_action :prepend_view_context_prefix
